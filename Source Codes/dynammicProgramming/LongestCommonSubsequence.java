@@ -273,6 +273,41 @@ public class LongestCommonSubsequence {
 		}
 	}
 
+	static int longestIncreasingSubsequence(int arr[]) {
+		int n = arr.length;
+		int lis[] = new int[n];
+		lis[0] = 1;
+		for (int i = 1; i < n; i++) {
+			lis[i] = 1;
+			for (int j = 0; j < i; j++) {
+				if (arr[i] > arr[j] && lis[i] < lis[j] + 1) {
+					lis[i] = lis[j] + 1;
+				}
+			}
+		}
+		int max = 0;
+		for (int x : lis)
+			max = Math.max(max, x);
+		return max;
+	}
+
+	static int maximumSumIncreasingSubsequence(int arr[]) {
+		int n = arr.length;
+		int msis[] = new int[n];
+		for (int i = 0; i < n; i++)
+			msis[i] = arr[i];
+		for (int i = 1; i < n; i++) {
+			for (int j = 0; j < i; j++) {
+				if (arr[i] > arr[j] && msis[i] < arr[i] + msis[j])
+					msis[i] = arr[i] + msis[j];
+			}
+		}
+		int max = Integer.MIN_VALUE;
+		for (int i : msis)
+			max = Math.max(max, i);
+		return max;
+	}
+
 	public static void main(String[] args) {
 		//	String x = "AGGTAB";
 		//	String y = "GXTXAYB";
@@ -297,11 +332,15 @@ public class LongestCommonSubsequence {
 		//	System.out.println(longestPalindromicSubsequence(x, m));
 		//	String x = "geeksforgeeks";
 		//	System.out.println(minimunDeletionToMakePalindrome(x, x.length()));
-		String x = "b";
-		String y = "abc";
+		//		String x = "b";
+		//		String y = "abc";
 		//	System.out.println(longestRepeatingSubsequence(x, x.length()));
 		//	System.out.println(printLRS(x, x.length()));
 		//	System.out.println(sequencePatternMatching(x, y, x.length(), y.length()));
-		System.out.println(sequencePatternMatchingByTwoPointers(x, y, x.length(), y.length()));
+		//		System.out.println(sequencePatternMatchingByTwoPointers(x, y, x.length(), y.length()));
+		//		int arr[] = { 10, 22, 9, 33, 21, 50, 41, 60 };
+		//		System.out.println(longestIncreasingSubsequence(arr));
+		int arr[] = new int[] { 1, 101, 2, 3, 100, 4, 5 };
+		System.out.println(maximumSumIncreasingSubsequence(arr));
 	}
 }
