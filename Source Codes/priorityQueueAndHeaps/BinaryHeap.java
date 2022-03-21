@@ -1,189 +1,156 @@
 package priorityQueueAndHeaps;
 
+import java.util.ArrayList;
+
 public class BinaryHeap {
-    public int[] array;
-    public int count;
-    public int capacity;
-    public int heap_type;
+	ArrayList<Integer> heap;
 
-    public BinaryHeap(int capacity, int heap_type) {
-	this.heap_type = heap_type;
-	this.count = 0;
-	this.capacity = capacity;
-	this.array = new int[capacity];
-    }
+	public BinaryHeap() {
+		heap = new ArrayList<Integer>();
+	}
 
-    public int getParent(int i) {
-	if (i <= 0 || i > this.count) {
-	    return -1;
-	} else {
-	    return this.array[(i - 1) / 2];
+	public int size() {
+		return this.heap.size();
 	}
-    }
 
-    public int getLeftChild(int i) {
-	int left = (2 * i) + 1;
-	if (left >= this.count) {
-	    return -1;
-	} else {
-	    // System.out.println(this.array[left]);
-	    return left;
+	public int getMax() {
+		return this.heap.get(0);
 	}
-    }
 
-    public int getRightChild(int i) {
-	int right = (2 * i) + 2;
-	if (right >= this.count) {
-	    return -1;
-	} else {
-	    // System.out.println(this.array[right]);
-	    return right;
-	}
-    }
+	private int getParent(int i) {
+		if (i <= 0 || i > size() - 1)
+			return -1;
 
-    public int getMaximum() {
-	if (this.count == 0) {
-	    return -1;
-	} else {
-	    return this.array[0];
+		return (i - 1) / 2;
 	}
-    }
 
-    public void percolateDown(int i) {
-	int left, right, max, temp;
-	left = getLeftChild(i);
-	right = getRightChild(i);
-	if (left != -1 && this.array[left] > this.array[i]) {
-	    max = left;
-	} else {
-	    max = i;
-	}
-	if (right != -1 && this.array[max] < this.array[right]) {
-	    max = right;
-	}
-	if (max != i) {
-	    temp = this.array[i];
-	    this.array[i] = this.array[max];
-	    this.array[max] = temp;
-	    percolateDown(max);
-	}
-    }
+	private int getLeftChild(int i) {
+		int left = (2 * i) + 1;
+		if (i < 0 || i > size() - 1 || left > size() - 1 || left < 0)
+			return -1;
 
-    public void insert(int data) {
-	int i;
-	if (this.count == capacity) {
-	    reSizeHeap();
+		return left;
 	}
-	this.count++;
-	i = this.count - 1;
-	if (i == 0) {
-	    this.array[i] = data;
-	    return;
-	}
-	while (i >= 0 && data > this.array[(i - 1) / 2]) {
-	    this.array[i] = this.array[(i - 1) / 2];
-	    i = (i - 1) / 2;
-	}
-	this.array[i] = data;
-    }
 
-    public void reSizeHeap() {
-	int array_old[] = new int[this.capacity];
-	System.arraycopy(this.array, 0, array_old, 0, this.count - 1);
-	this.array = new int[this.capacity * 2];
-	if (this.array == null) {
-	    System.out.println("Memory Error");
-	    return;
-	}
-	for (int i = 0; i < this.capacity; i++) {
-	    this.array[i] = array_old[i];
-	}
-	this.capacity *= 2;
-	array_old = null;
-    }
+	private int getRightChild(int i) {
+		int right = (2 * i) + 2;
+		if (i < 0 || i > size() - 1 || right > size() - 1 || right < 0)
+			return -1;
 
-    public int deleteMax() {
-	if (this.count == 0) {
-	    return -1;
+		return right;
 	}
-	int data = this.array[0];
-	this.array[0] = this.array[this.count - 1];
-	this.count--;
-	percolateDown(0);
-	return data;
-    }
 
-    public void displayHeap() {
-	for (int i = 0; i < this.array.length; i++) {
-	    System.out.println(this.array[i]);
-	}
-    }
+	private void percolateDown(int i) {
+		int left = getLeftChild(i);
+		int right = getRightChild(i);
+		int max;
 
-    public void buildHeap(BinaryHeap h, int a[], int n) {
-	if (h == null) {
-	    return;
-	}
-	while (n > this.capacity) {
-	    h.reSizeHeap();
-	}
-	for (int i = 0; i < n; i++) {
-	    h.array[i] = a[i];
-	}
-	h.count = n;
-	for (int i = (n - 1) / 2; i >= 0; i--) {
-	    h.percolateDown(i);
-	}
-    }
+		if (left != -1 && this.heap.get(left) > this.heap.get(i))
+			max = left;
+		else
+			max = i;
 
-    public void heapSort(int a[], int n) {
-	BinaryHeap h = new BinaryHeap(n, 0);
-	int oldSize, i, temp;
-	buildHeap(h, a, n);
-	oldSize = h.count;
-	for (i = n - 1; i > 0; i--) {
-	    temp = h.array[0];
-	    h.array[0] = h.array[h.count - 1];
-	    h.array[h.count - 1] = temp;
-	    h.count--;
-	    h.percolateDown(0);
-	}
-	h.count = oldSize;
-	System.arraycopy(h.array, 0, a, 0, n);
-    }
+		if (right != -1 && this.heap.get(right) > this.heap.get(max))
+			max = right;
 
-    public void smallerElements(int key) {
-	for (int i = 0; i < this.count; i++) {
-	    if (key > this.array[i]) {
-		System.out.println(this.array[i]);
-	    }
+		if (max != i) {
+			int temp = this.heap.get(i);
+			this.heap.set(i, this.heap.get(max));
+			this.heap.set(max, temp);
+			percolateDown(max);
+		}
 	}
-    }
 
-    public void smallerElementUsingTree(int key, int pos) {
-	if (pos >= this.count) {
-	    return;
-	}
-	if (this.array[pos] < key) {
-	    System.out.println(this.array[pos]);
-	}
-	// System.out.println(this.array[pos]);
-	smallerElementUsingTree(key, (2 * pos) + 1);
-	smallerElementUsingTree(key, (2 * pos) + 2);
-    }
+	public void push(int data) {
+		this.heap.add(data);
+		int current = size() - 1;
 
-    public void mergeHeap(BinaryHeap bh, int a[], int b[]) {
-	int alen = a.length;
-	int blen = b.length;
-	int mergeHeap[] = new int[alen + blen];
-	System.arraycopy(a, 0, mergeHeap, 0, alen);
-	System.arraycopy(b, 0, mergeHeap, alen, blen - 1);
-	buildHeap(bh, mergeHeap, mergeHeap.length);
-    }
-
-    public int KthLargestElement(BinaryHeap bh, int k) {
-	for (int i = 1; i < k; i++) {
-	    bh.deleteMax();
+		while (current != 0 && this.heap.get(getParent(current)) < this.heap.get(current)) {
+			int temp = this.heap.get((current - 1) / 2);
+			this.heap.set((current - 1) / 2, this.heap.get(current));
+			this.heap.set(current, temp);
+			current = getParent(current);
+		}
 	}
-	return bh.deleteMax();
-    }
+
+	private void increaseKey(int index, int value) {
+		this.heap.set(index, value);
+
+
+		while (index != 0 && this.heap.get(getParent(index)) < this.heap.get(index)) {
+			int parent = getParent(index);
+			int temp = this.heap.get(index);
+			this.heap.set(index, this.heap.get(parent));
+			this.heap.set(parent, temp);
+			index = getParent(index);
+		}
+	}
+
+	private void decreaseKey(int index, int value) {
+		this.heap.set(index, value);
+		percolateDown(index);
+	}
+
+	public void changeKey(int index, int value) {
+		if (index > size() - 1)
+			throw new ArrayIndexOutOfBoundsException("Invalid Index: " + index + " For Heap Size: " + size());
+
+		int prev = this.heap.get(index);
+
+
+		if (prev == value)
+			return;
+
+		if (prev > value)
+			decreaseKey(index, value);
+		else
+			increaseKey(index, value);
+	}
+
+	public int deleteMax() {
+		if (this.heap.isEmpty())
+			throw new NullPointerException("Empty Heap");
+
+		if (size() == 1)
+			return this.heap.remove(0);
+
+		int root = this.heap.get(0);
+
+		this.heap.set(0, this.heap.get(size() - 1));
+		this.heap.remove(size() - 1);
+
+		percolateDown(0);
+
+		return root;
+	}
+
+	public int deleteKey(int index) {
+		int value = this.heap.get(index);
+
+		increaseKey(index, Integer.MAX_VALUE);
+		deleteMax();
+
+		return value;
+	}
+
+	public void displayHeap() {
+		for (int i : this.heap)
+			System.out.print(i + " ");
+		System.out.println();
+	}
+
+	public static void main(String[] args) {
+		BinaryHeap bh = new BinaryHeap();
+		for (int i = 0; i < 20; i++)
+			bh.push(i);
+		bh.displayHeap();
+		System.out.println(bh.deleteMax());
+		bh.displayHeap();
+		bh.changeKey(5, -1);
+		bh.changeKey(4, 10000);
+		bh.displayHeap();
+		System.out.println(bh.deleteKey(2));
+		bh.displayHeap();
+		System.out.println(bh.getMax());
+	}
 }

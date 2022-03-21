@@ -4,6 +4,7 @@ package slidingWindowProblems;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 public class SlidingWindowMaximum {
 
@@ -42,6 +43,45 @@ public class SlidingWindowMaximum {
 				j += 1;
 			}
 		}
+		return ans;
+	}
+
+	static int[] anotherApproach(int nums[], int k) {
+
+		if (nums == null || nums.length == 0 || k == 0)
+			return new int[] {};
+
+		if (k >= nums.length) {
+			int max = Integer.MIN_VALUE;
+
+			for (int i : nums)
+				max = Math.max(max, i);
+
+			return new int[] { max };
+		}
+
+		if (k == 1)
+			return nums;
+
+		Deque<Integer> dq = new LinkedList<Integer>();
+		int ans[] = new int[nums.length - k + 1];
+		int temp = 0;
+
+		for (int i = 0; i < nums.length; i++) {
+
+			if (!dq.isEmpty() && dq.peekFirst() <= (i - k))
+				dq.pollFirst();
+
+			while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i])
+				dq.pollLast();
+
+			dq.addLast(i);
+			if (i >= (k - 1)) {
+				ans[temp] = nums[dq.peekFirst()];
+				temp += 1;
+			}
+		}
+
 		return ans;
 	}
 
