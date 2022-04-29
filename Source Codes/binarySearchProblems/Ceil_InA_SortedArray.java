@@ -20,6 +20,6 @@ public class Ceil_InA_SortedArray {
 
 	public static void main(String[] args) {
 		int arr[] = { 1, 2, 4, 6, 10, 12, 14 };
-		System.out.println(ceil(arr, 12));
+		System.out.println(ceil(arr, 9));
 	}
 }
