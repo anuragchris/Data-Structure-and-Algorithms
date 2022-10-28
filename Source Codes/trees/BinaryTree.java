@@ -422,7 +422,8 @@ public class BinaryTree {
 		return leaf;
 	}
 
-	//Link For Problem: https://www.geeksforgeeks.org/check-root-leaf-path-given-sequence/
+	// Link For Problem:
+	// https://www.geeksforgeeks.org/check-root-leaf-path-given-sequence/
 	public boolean isValidSequence(Node root, int n, int pos, int arr[]) {
 		if (root == null)
 			return false;
@@ -439,6 +440,47 @@ public class BinaryTree {
 		return isValidSequence(root.getLeft(), n, pos + 1, arr) || isValidSequence(root.getRight(), n, pos + 1, arr);
 	}
 
+	public void binaryTreeIn2D(Node root) {
+		print2DBinaryTreeUtil(root, 0);
+	}
+
+	private void print2DBinaryTreeUtil(Node root, int space) {
+		if (root == null)
+			return;
+
+		space += 10;
+
+		print2DBinaryTreeUtil(root.getRight(), space);
+
+		System.out.println("\n");
+
+		for (int i = 10; i < space; i++)
+			System.out.println(' ');
+
+		System.out.print(root.getData() + "\n");
+
+		print2DBinaryTreeUtil(root.getLeft(), space);
+	}
+
+	Node head, tail = null;
+
+	public void binaryTreeToDLL(Node root) {
+		if (root == null)
+			return;
+
+		binaryTreeToDLL(root.getLeft());
+
+		if (head == null)
+			head = tail = root;
+		else {
+			tail.setRight(root);
+			root.setLeft(tail);
+			tail = root;
+		}
+
+		binaryTreeToDLL(root.getRight());
+	}
+
 	public static void main(String[] args) {
 		BinaryTree tree = new BinaryTree();
 		tree.root = new Node(1);
@@ -447,42 +489,52 @@ public class BinaryTree {
 		tree.root.getLeft().setLeft(new Node(4));
 		tree.root.getRight().setRight(new Node(5));
 
-		//		tree.inOrder(tree.root);
-		//		System.out.println();
-		//		tree.inOrderIterative(tree.root);
+		// tree.inOrder(tree.root);
+		// System.out.println();
+		// tree.inOrderIterative(tree.root);
 
-		//		tree.preOrder(tree.root);
-		//		System.out.println();
-		//		tree.preOrderIterative(tree.root);
+		// tree.preOrder(tree.root);
+		// System.out.println();
+		// tree.preOrderIterative(tree.root);
 
-		//		tree.postOrder(tree.root);
-		//		System.out.println();
-		//		tree.postOrderIterative(tree.root);
+		// tree.postOrder(tree.root);
+		// System.out.println();
+		// tree.postOrderIterative(tree.root);
 
-		//		tree.levelOrder(tree.root);
+		// tree.levelOrder(tree.root);
 
-		//		System.out.println(tree.search(tree.root, 5));
-		//		System.out.println(tree.searchIterative(tree.root, 5));
+		// System.out.println(tree.search(tree.root, 5));
+		// System.out.println(tree.searchIterative(tree.root, 5));
 
-		//		tree.insert(tree.root, 6);
-		//		tree.levelOrder(tree.root);
+		// tree.insert(tree.root, 6);
+		// tree.levelOrder(tree.root);
 
-		//		System.out.println(tree.size(tree.root));
-		//		System.out.println(tree.sizeIterative(tree.root));
+		// System.out.println(tree.size(tree.root));
+		// System.out.println(tree.sizeIterative(tree.root));
 
-		//		tree.reverseLevelOrder(tree.root);
+		// tree.reverseLevelOrder(tree.root);
 
-		//		System.out.println(tree.height(tree.root));
-		//		System.out.println(tree.heightIterative(tree.root));
+		// System.out.println(tree.height(tree.root));
+		// System.out.println(tree.heightIterative(tree.root));
 
-		//		System.out.println(tree.minimumDepth(tree.root));
-		//		System.out.println(tree.minimumDepthIterative(tree.root));
+		// System.out.println(tree.minimumDepth(tree.root));
+		// System.out.println(tree.minimumDepthIterative(tree.root));
 
-		//		System.out.println(tree.deepestNode(tree.root));
-		//		System.out.println(tree.leafCount(tree.root));
-		//		System.out.println(tree.leafCountIterative(tree.root));
+		// System.out.println(tree.deepestNode(tree.root));
+		// System.out.println(tree.leafCount(tree.root));
+		// System.out.println(tree.leafCountIterative(tree.root));
 
-		//		int arr[] = { 1, 2, 4 };
-		//		System.out.println(tree.isValidSequence(tree.root, arr.length, 0, arr));
+		// int arr[] = { 1, 2, 4 };
+		// System.out.println(tree.isValidSequence(tree.root, arr.length, 0, arr));
+
+		//		tree.binaryTreeIn2D(tree.root);
+
+		tree.binaryTreeToDLL(tree.root);
+
+		var current = tree.root;
+		while (current != null) {
+			System.out.print(current.getData() + " ");
+			current = current.getRight();
+		}
 	}
 }
