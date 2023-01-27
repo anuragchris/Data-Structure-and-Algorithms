@@ -36,23 +36,30 @@ public class KruskalsAlgorithm {
 
 	public void kruskalMST() {
 		Arrays.sort(ke);
+
 		Kruskal_Edge op[] = new Kruskal_Edge[vertexCount - 1];
+
 		int k = 0;
 		int parent[] = new int[vertexCount];
+
 		for (int i = 0; i < vertexCount; i++)
 			parent[i] = i;
+
 		for (int i = 0; i < edgeCount; i++) {
 			if (k == vertexCount - 1)
 				break;
+
 			Kruskal_Edge current = ke[i];
 			int src_parent = find(current.src, parent);
 			int dest_parent = find(current.dest, parent);
+
 			if (src_parent != dest_parent) {
 				op[k] = current;
 				k++;
 				parent[src_parent] = dest_parent;
 			}
 		}
+
 		for (int i = 0; i < op.length; i++) {
 			System.out.println(op[i].src + " ->" + op[i].dest + " ->" + op[i].weight);
 		}
