@@ -4,20 +4,20 @@ public class Implement {
 	public static void main(String Args[]) {
 
 		// 1. Bubble Sort
-		// int a[] = { 1, 3, 4, 6, 5, 7, 2, 9, 99, 58, 31 };
-		// BubbleSort bs = new BubbleSort();
-		// bs.bubbleSort(a);
-		// for (int i = 0; i < a.length; i++) {
-		// System.out.print(a[i] + " ");
-		// }
+		//		int a[] = { 2, 1, 5, 8, 7, 9, 0 };
+		//		BubbleSort bs = new BubbleSort();
+		//		bs.bubbleSort(a);
+		//		for (int i = 0; i < a.length; i++) {
+		//			System.out.print(a[i] + " ");
+		//		}
 
-		// int a[] = { 1, 9, 8, 2, 5, 6, 7 };
-		// BubbleSort bs = new BubbleSort();
-		// if (bs.alreadySort(a)) {
-		// System.out.println("Already Sorted");
-		// } else {
-		// System.out.println("Not Sorted");
-		// }
+		int a[] = { 2, 1, 5, 8, 7, 9, 0 };
+		BubbleSort bs = new BubbleSort();
+		if (bs.alreadySort(a)) {
+			System.out.println("Already Sorted");
+		} else {
+			System.out.println("Not Sorted");
+		}
 
 		// 2. Selection Sort
 
@@ -43,13 +43,13 @@ public class Implement {
 		// System.out.print(arr[i] + " ");
 		// }
 
-		int a[] = { 14, 13, 67, 2, 8, 4, 99, 6 };
-		QuickSort qs = new QuickSort();
-		System.out.print("Original Array : ");
-		qs.printArray(a);
-		System.out.println();
-		qs.quickSort(a, 0, a.length - 1);
-		System.out.print("Sorted Array : ");
+		//		int a[] = { 14, 13, 67, 2, 8, 4, 99, 6 };
+		//		QuickSort qs = new QuickSort();
+		//		System.out.print("Original Array : ");
+		//		qs.printArray(a);
+		//		System.out.println();
+		//		qs.quickSort(a, 0, a.length - 1);
+		//		System.out.print("Sorted Array : ");
 		//		qs.printArray(a);
 
 		// 6. Counting Sort
